@@ -1,0 +1,54 @@
+<html>
+
+<head>
+     <link rel="stylesheet" href="css/style.css">
+     <script src='https://code.jquery.com/jquery-1.10.0.min.js'></script>
+    <script type="text/javascript" src="js/index.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function() {
+        var url = "https://sudjatmiko.000webhostapp.com/json-dosen.php";
+        $.getJSON(url, function(result) {
+            console.log(result);
+            $.each(result, function(i, field) {
+                var id = field.id;
+                var nip = field.nip;
+                var nama_dosen = field.nama_dosen;
+                 $("#listview").append("<a class='item' href='form-dosen.html?id=" + id + "&nip=" + nip + "&nama_dosen=" + nama_dosen + "'>" + "<h2>NIP : " + nip + " <p>NAMA : " + nama_dosen + "</h2></p></a><hr>");
+            });
+        });
+    });
+    </script>
+</head>
+
+<body>
+<div class="login-wrap">
+  <h2>DOSEN UNISBANK 2018</h2>
+  <hr>
+    <div class="form">
+    <!--<div class="bar bar-header bar-positive" style="margin-bottom:80px;">
+        <a href="index.html" class="button button-clear">Home</a>
+        <h1 class="title">Data dosen</h1>
+    </div>-->
+    <br/>
+    <br/>
+    
+    <ul class="list" id="listview">
+    </ul>
+    <div class="list">
+        <div class="login-page">
+  <div class="form">
+    
+    <form class="login-form">
+      <button formaction="index.html">Home</button>
+      <button formaction="dosen.html">INSERT DATA DOSEN</button>
+
+  </form>
+  </div>
+  </div>
+  </div>
+    </div>
+    <br/>
+    <br/>
+</body>
+
+</html>

@@ -1,0 +1,107 @@
+<html>
+
+<head>
+   <link rel="stylesheet" href="css/style.css">
+     <script src='https://code.jquery.com/jquery-1.10.0.min.js'></script>
+    <script type="text/javascript" src="js/index.js"></script>
+    <script type="text/javascript" src="js/geturi.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function() {
+        var id = decodeURI(getUrlVars()["id"]);
+        var kd_mk = decodeURI(getUrlVars()["kd_mk"]);
+        var nama_makul = decodeURI(getUrlVars()["nama_makul"]);
+        var sks = decodeURI(getUrlVars()["sks"]);
+        $("#id").val(id);
+        $("#kd_mk").val(kd_mk);
+        $("#nama_makul").val(nama_makul);
+        $("#sks").val(sks);
+        $("#update").click(function() {
+            var id = $("#id").val();
+            var kd_mk = $("#kd_mk").val();
+            var nama_makul = $("#nama_makul").val();
+            var dataString = "id=" + id + "&kd_mk=" + kd_mk + "&nama_makul=" + nama_makul + "&sks=" + sks + "&update=";
+            $.ajax({
+                type: "POST",
+                url: "https://sudjatmiko.000webhostapp.com/update-makul.php",
+                data: dataString,
+                crossDomain: true,
+                cache: false,
+                beforeSend: function() {
+                    $("#update").val('Connecting...');
+                },
+                success: function(data) {
+                    if (data == "success") {
+                        alert("Updated");
+                        $("#update").val("Update");
+                    } else if (data == "error") {
+                        alert("error");
+                    }
+                }
+            });
+
+        });
+        $("#delete").click(function() {
+            var id = $("#id").val();
+            var dataString = "id=" + id + "&delete=";
+            $.ajax({
+                type: "GET",
+                url: "https://sudjatmiko.000webhostapp.com/delete-makul.php",
+                data: dataString,
+                crossDomain: true,
+                cache: false,
+                beforeSend: function() {
+                    $("#delete").val('Connecting...');
+                },
+                success: function(data) {
+                    if (data == "success") {
+                        alert("Deleted");
+                        $("#delete").val("Delete");
+                    } else if (data == "error") {
+                        alert("error");
+                    }
+                }
+            });
+
+        });
+    });
+    </script>
+</head>
+
+<body>
+<div class="login-wrap">
+  <h2>MATAKULIAH UNISBANK 2018</h2>
+  <hr>
+    <div class="form">
+   <!-- <div class="bar bar-header bar-positive" style="margin-bottom:80px;">
+        <a href="index.html" class="button button-clear">Home</a>
+        <h1 class="title">Update Data makul</h1>
+        <a class="button button-clear" href="readjson.html">Read JSON</a>
+    </div> -->
+    <div class="list">
+        <div class="login-page">
+  <div class="form">
+    
+    <form class="login-form">
+        <input type="hidden" id="id" value="" />
+      <input type="text" id="kd_mk" value="" />
+      <input type="text" id="nama_makul" value="" />
+      <input type="text" id="sks" value="" />
+      <div class="item">
+       
+      <center>
+            <input type="button" id="update" class="button button-block" value="Update" />
+            <input type="button" id="delete" class="button button-block" value="Delete" />
+            <hr>
+            <BR>
+                <BR>
+            <button formaction="index.html">Home</button>
+       <button formaction="readjson-makul.html">LIHAT DATA MAKUL</button>
+            </center>
+        </div>
+    </form>
+  </div>
+</div>
+    </div>
+</body>
+
+</html>
