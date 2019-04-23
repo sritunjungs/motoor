@@ -1,0 +1,103 @@
+<html>
+
+<head>
+        
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/ionic.css">
+    <script type="text/javascript" src="js/jquery.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function() {
+        $("#insert").click(function() {
+            var nim = $("#nim").val();
+            var nama = $("#nama").val();
+            var prodi = $("#prodi").val();
+            var dataString = "nim=" + nim + "&nama=" + nama + "&prodi=" + prodi + "&insert=";
+            if ($.trim(nim).length > 0 & $.trim(nama).length > 0 & $.trim(prodi).length > 0) {
+                $.ajax({
+                    type: "POST",
+                    url: "https://myakademik.xyz/insert-mahasiswa.php",
+                    data: dataString,
+                    crossDomain: true,
+                    cache: false,
+                    beforeSend: function() {
+                        $("#insert").val('Connecting...');
+                    },
+                    success: function(data) {
+                        if (data == "success") {
+                            alert("inserted");
+                            $("#insert").val('submit');
+                        } else if (data == "error") {
+                            alert("error");
+                        }
+                    }
+                });
+            }
+            return false;
+        });
+    });
+    </script>
+</head>
+
+<body>
+        <nav class="navbar navbar-inverse">
+                <div class="container-fluid">
+                  <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                      <span class="icon-bar"></span>
+                      <span class="icon-bar"></span>
+                      <span class="icon-bar"></span>                        
+                    </button>
+                    <a class="navbar-brand" href="#">Input Data Mahasiswa</a>
+                  </div>
+                  <div class="collapse navbar-collapse" id="myNavbar">
+                    <ul class="nav navbar-nav">
+                      <li class="active"><a href="index.html">Home</a></li>
+                      <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Input <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="mahasiswa.html">Input Mahasiswa</a></li>
+                            <li><a href="dosen.html">Input Dosen</a></li>
+                            <li><a href="matakuliah.html">Input Mata Kuliah</a></li>
+                        </ul>
+                      </li>
+                      <li class="dropdown">
+                      <a class="dropdown-toggle" data-toggle="dropdown" href="#">List <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                                <li><a href="readjson-mahasiswa.html">List Mahasiswa</a></li>
+                                <li><a href="readjson-dosen.html">List Dosen</a></li>
+                                <li><a href="readjson-matakuliah.html">List Mata Kuliah</a></li>
+                      </ul>
+                    </li>
+                    </ul>
+                  </div>
+                </div>
+              </nav>  
+      <br/>
+    <div class="list">
+        <input type="hidden" id="id" value="" />
+        <div class="item">
+            <label>NIM</label>
+            <input type="text" id="nim" value="" />
+        </div>
+        <div class="item">
+            <label>Nama</label>
+            <input type="text" id="nama" value="" />
+        </div>
+        <div class="item">
+            <label>Prodi</label>
+            <input type="text" id="prodi" value="" />
+        </div>
+        <div class="item">
+            <input type="button" id="insert" class="btn btn-success btn-block" value="Insert" />
+        </div>
+
+        <div class="item">
+            <a href="readjson-mahasiswa.html"><input type="button" class="btn btn-info btn pull-right" value="Lihat List Mahasiswa" /></a>
+        </div>
+    
+    </div>
+</body>
+
+</html>
