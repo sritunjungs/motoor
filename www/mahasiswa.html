@@ -1,0 +1,72 @@
+<html>
+
+<head>
+  <title>SISTEM PENDATAAN AKADEMIK UNISBANK</title>
+     <link rel="stylesheet" href="css/style.css">
+     <script src='https://code.jquery.com/jquery-1.10.0.min.js'></script>
+    <script type="text/javascript" src="js/index.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function() {
+        $("#insert").click(function() {
+            var nim = $("#nim").val();
+            var nama = $("#nama").val();
+            var prodi = $("#prodi").val();
+            var dataString = "&nim=" + nim + "&nama=" + nama + "&prodi=" + prodi + "&insert=";
+            if ($.trim(nim).length > 0 & $.trim(nama).length > 0 & $.trim(prodi).length > 0) {
+                $.ajax({
+                    type: "POST",
+                    url: "https://sudjatmiko.000webhostapp.com/insert-mahasiswa.php",
+                    data: dataString,
+                    crossDomain: true,
+                    cache: false,
+                    beforeSend: function() {
+                        $("#insert").val('Connecting...');
+                    },
+                    success: function(data) {
+                        if (data == "success") {
+                            alert("inserted");
+                            $("#insert").val('Insert');
+                        } else if (data == "error") {
+                            alert("error");
+                        }
+                    }
+                });
+            }
+            return false;
+        });
+    });
+    </script>
+</head>
+
+<body>
+ <div class="login-wrap">
+  <h2>MAHASISWA UNISBANK 2019</h2>
+  <hr>
+    <div class="form">
+    <!--<div class="bar bar-header bar-positive" style="margin-bottom:80px;">
+        <h1 class="title">Input Mahasiswa</h1>
+        <a class="button button-clear" href="readjson.html">Lihat Data Mahasiswa</a>
+    </div>-->
+    <div class="list">
+        <div class="login-page">
+  <div class="form">
+    
+    <form class="login-form">
+        <input type="hidden" id="id" value="" />
+      <input type="text" id="nim" value="" placeholder="NIM"/>
+      <input type="text" id="nama" value="" placeholder="Nama"/>
+      <input type="text" id="prodi" value="" placeholder="Prodi"/>
+      <button id="insert" value="Insert">Insert</button>
+      <button formaction="index.html">Home</button>
+      <HR>
+          <BR>
+              <button formaction="readjson-mahasiswa.html">LIHAT DATA MAHASISWA</button>
+    </form>
+
+  </div>
+</div>
+    </div>
+    
+</body>
+
+</html>

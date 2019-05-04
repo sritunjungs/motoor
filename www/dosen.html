@@ -1,0 +1,72 @@
+<html>
+
+<head>
+  
+  <title>SISTEM PENDATAAN AKADEMIK UNISBANK</title>
+  
+      <link rel="stylesheet" href="css/style.css">
+     <script src='https://code.jquery.com/jquery-1.10.0.min.js'></script>
+    <script type="text/javascript" src="js/index.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function() {
+        $("#insert").click(function() {
+            var nip = $("#nip").val();
+            var nama_dosen = $("#nama_dosen").val();
+            var dataString = "&nip=" + nip + "&nama_dosen=" + nama_dosen + "&insert=";
+            if ($.trim(nip).length > 0 & $.trim(nama_dosen).length > 0) {
+                $.ajax({
+                    type: "POST",
+                    url: "https://sudjatmiko.000webhostapp.com/insert-dosen.php",
+                    data: dataString,
+                    crossDomain: true,
+                    cache: false,
+                    beforeSend: function() {
+                        $("#insert").val('Connecting...');
+                    },
+                    success: function(data) {
+                        if (data == "success") {
+                            alert("inserted");
+                            $("#insert").val('Insert');
+                        } else if (data == "error") {
+                            alert("error");
+                        }
+                    }
+                });
+            }
+            return false;
+        });
+    });
+    </script>
+</head>
+
+<body>
+
+  <div class="login-wrap">
+  <h2>DOSEN UNISBANK 2019</h2>
+  <hr>
+    <div class="form">
+    <!--<div class="bar bar-header bar-positive" style="margin-bottom:80px;">
+        <h1 class="title">Input dosen</h1>
+        <a class="button button-clear" href="readjson.html">Lihat Data dosen</a>
+    </div>-->
+    <div class="list">
+        <div class="login-page">
+  <div class="form">
+    
+    <form class="login-form">
+        <input type="hidden" id="id" value="" />
+      <input type="text" id="nip" value="" placeholder="NIP"/>
+      <input type="text" id="nama_dosen" value="" placeholder="Nama Dosen"/>
+      <button id="insert" value="Insert">Insert</button>
+        <button formaction="index.html">Home</button>
+        <HR>
+            <BR>
+          <button formaction="readjson-dosen.html">LIHAT DATA DOSEN</button>
+    </form>
+  </div>
+</div>
+    </div>
+    
+</body>
+
+</html>
