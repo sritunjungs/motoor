@@ -1,0 +1,67 @@
+<html>
+
+<head>
+    <link rel="stylesheet" href="css/style.css">
+     <script src='https://code.jquery.com/jquery-1.10.0.min.js'></script>
+    <script type="text/javascript" src="js/index.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function() {
+        $("#insert").click(function() {
+            var kd_mk = $("#kd_mk").val();
+            var nama_makul = $("#nama_makul").val();
+            var sks = $("#sks").val();
+            var dataString = "&kd_mk=" + kd_mk + "&nama_makul=" + nama_makul + "&sks=" + sks + "&insert=";
+            if ($.trim(kd_mk).length > 0 & $.trim(nama_makul).length > 0 & $.trim(sks).length > 0) {
+                $.ajax({
+                    type: "POST",
+                    url: "https://sudjatmiko.000webhostapp.com/insert-makul.php",
+                    data: dataString,
+                    crossDomain: true,
+                    cache: false,
+                    beforeSend: function() {
+                        $("#insert").val('Connecting...');
+                    },
+                    success: function(data) {
+                        if (data == "success") {
+                            alert("inserted");
+                            $("#insert").val('Insert');
+                        } else if (data == "error") {
+                            alert("error");
+                        }
+                    }
+                });
+            }
+            return false;
+        });
+    });
+    </script>
+</head>
+
+<body>
+ <div class="login-wrap">
+  <h2>MAKUL UNISBANK 2018</h2>
+  <hr>
+    <div class="form">
+    <!--<div class="bar bar-header bar-positive" style="margin-bottom:80px;">
+        <h1 class="title">Input makul</h1>
+        <a class="button button-clear" href="readjson.html">Lihat Data makul</a>
+    </div>-->
+    <div class="list">
+        <div class="login-page">
+  <div class="form">
+    
+    <form class="login-form">
+        <input type="hidden" id="id" value="" />
+      <input type="text" id="kd_mk" value="" placeholder="Kode Makul"/>
+      <input type="text" id="nama_makul" value="" placeholder="Nama Makul"/>
+      <input type="text" id="sks" value="" placeholder="SKS"/>
+      <button id="insert" value="Insert">Insert</button>
+    </form>
+    <p class="message">Lihat Data makul <a href="readjson-makul.html">Go . . . !</a></p>
+  </div>
+</div>
+    </div>
+    
+</body>
+
+</html>
