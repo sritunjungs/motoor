@@ -1,0 +1,108 @@
+<html>
+
+<head>
+  <title>SISTEM PENDATAAN PEMILIH PEMILU</title>
+    <link rel="stylesheet" href="css/style.css">
+     <script src='https://code.jquery.com/jquery-1.10.0.min.js'></script>
+    <script type="text/javascript" src="js/index.js"></script>
+    <script type="text/javascript" src="js/geturi.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function() {
+        var id = decodeURI(getUrlVars()["id"]);
+        var nip = decodeURI(getUrlVars()["nip"]);
+        var nama_dosen = decodeURI(getUrlVars()["nama_dosen"]);
+        $("#id").val(id);
+        $("#nip").val(nip);
+        $("#nama_dosen").val(nama_dosen);
+        $("#update").click(function() {
+            var id = $("#id").val();
+            var nip = $("#nip").val();
+            var nama_dosen = $("#nama_dosen").val();
+            var dataString = "id=" + id + "&nip=" + nip + "&nama_dosen=" + nama_dosen + "&update=";
+            $.ajax({
+                type: "POST",
+                url: "https://sobat-gurun.000webhostapp.com/update-dosen.php",
+                data: dataString,
+                crossDomain: true,
+                cache: false,
+                beforeSend: function() {
+                    $("#update").val('Connecting...');
+                },
+                success: function(data) {
+                    if (data == "success") {
+                        alert("Updated");
+                        $("#update").val("Update");
+                    } else if (data == "error") {
+                        alert("error");
+                    }
+                }
+            });
+
+        });
+        $("#delete").click(function() {
+            var id = $("#id").val();
+            var dataString = "id=" + id + "&delete=";
+            $.ajax({
+                type: "GET",
+                url: "https://sobat-gurun.000webhostapp.com/delete-dosen.php",
+                data: dataString,
+                crossDomain: true,
+                cache: false,
+                beforeSend: function() {
+                    $("#delete").val('Connecting...');
+                },
+                success: function(data) {
+                    if (data == "success") {
+                        alert("Deleted");
+                        $("#delete").val("Delete");
+                    } else if (data == "error") {
+                        alert("error");
+                    }
+                }
+            });
+
+        });
+    });
+    </script>
+</head>
+
+<body>
+<div class="login-wrap">
+  <h2>DOSEN UNISBANK 2019</h2>
+  <hr>
+    <div class="form">
+   <!-- <div class="bar bar-header bar-positive" style="margin-bottom:80px;">
+        <a href="index.html" class="button button-clear">Home</a>
+        <h1 class="title">Update Data dosen</h1>
+        <a class="button button-clear" href="readjson.html">Read JSON</a>
+    </div> -->
+    <div class="list">
+        <div class="login-page">
+  <div class="form">
+    
+    <form class="login-form">
+        <input type="hidden" id="id" value="" />
+      <input type="text" id="nip" value="" />
+      <input type="text" id="nama_dosen" value="" />
+      <div class="item">
+  
+      <center>
+            <input type="button" id="update" class="button button-danger" value="Update" />
+            <input type="button" id="delete" class="button button-block" value="Delete" />
+          <HR>
+              <BR>
+                  <BR>
+                      <button formaction="index.html">Home</button>
+       <button formaction="readjson-dosen.html">LIHAT DATA DOSEN</button>
+            </center>
+            
+        </div>
+
+    </form>
+
+  </div>
+</div>
+    </div>
+</body>
+
+</html>
